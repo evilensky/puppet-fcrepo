@@ -7,8 +7,9 @@ class fcrepo::derby {
 	$db_pass			= "ALSO_UNUSED"
 	
 	concat::fragment { "fedora-database":
-		ensure  => present,
-		content => template('fcrepo/fedora_db_properties.erb'),
-		target  => $fcrepo::config::propfile
+		ensure    => present,
+		content   => template('fcrepo/fedora_db_properties.erb'),
+		target    => $fcrepo::config::propfile
+    #    require => Class['concat::setup'],
 	}
 }

@@ -1,5 +1,4 @@
 class fcrepo {
-  include concat::setup
   
   if $config::version == 'latest' {
     $download_url = "http://sourceforge.net/projects/fedora-commons/files/latest/download"
@@ -10,7 +9,8 @@ class fcrepo {
   staging::file { 'fcrepo-installer.jar':
     source  => $download_url,
     timeout => 1200,
-    subdir  => 'fedora'
+    subdir  => 'fedora',
+    require => Class['tomcat::service'],
   }
  
   file { $config::fedora_base:
@@ -23,13 +23,13 @@ class fcrepo {
  
   exec { 'install-fedora':
     command     => "java -jar /opt/staging/fedora/fcrepo-installer.jar ${fcrepo::config::propfile}",
-    creates     => "${config::fedora_home}/server",
+    creates     => "$fcrepo::config::fedora_home/server",
     environment => "FEDORA_HOME=${config::fedora_home}",
     timeout     => 1800,
     user        => $config::user,
     group       => $config::group,
     path        => ['/bin', '/usr', '/usr/bin'],
-    require     => [Staging::File['fcrepo-installer.jar']],
+    require     => [Staging::File['fcrepo-installer.jar'],Concat["$fcrepo::config::propfile"]],
     notify      => File["${config::fedora_home}/server/status"], 
     #Concat::Fragment['fedora-tomcat-config']]
   }

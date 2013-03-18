@@ -1,7 +1,7 @@
 class fcrepo::params {
   $fedora_base          = '/usr/share'
   $fedora_home          = '/usr/share/fedora'
-  $user                 = 'tomcat'
+  $user                 = 'tomcat7'
   $version              = 'latest'
   $fedora_admin_pass    = 'fedoraAdmin'
   $group                = 'tomcat'

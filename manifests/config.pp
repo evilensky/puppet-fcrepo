@@ -14,10 +14,18 @@ class fcrepo::config(
   $ri_enabled           = $fcrepo::params::ri_enabled,
   $tomcat_home          = $fcrepo::params::tomcat_home,
   $server_host          = $fcrepo::params::server_host,
+  $dbtype               = $fcrepo::params::dbtype,
 ) inherits fcrepo::params {
 
 	include staging
- 
+  include concat::setup
+
+  #  if $dbtype == 'mysql' {
+  #    include fcrepo::mysql
+  #  } else {
+  #    include fcrepo::derby
+  #  }
+  # 
   if $messaging_uri == '' {
     $messaging_enabled = 'false'
   } else {
@@ -31,7 +39,9 @@ class fcrepo::config(
   }
 
 	$propfile = "${staging::path}/fedora/installer.properties"
-  concat { $propfile: }
+  concat { $propfile: 
+  require     => [Staging::File['fcrepo-installer.jar']],
+  }
 
   if $tomcat_home == '' {
 	  $install_tomcat = 'true'
