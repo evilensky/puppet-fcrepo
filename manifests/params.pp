@@ -1,6 +1,6 @@
 class fcrepo::params {
-  $fedora_base          = '/usr/share'
-  $fedora_home          = '/usr/share/fedora'
+  $fedora_base          = '/usr/local'
+  $fedora_home          = '/usr/local/fedora'
   $user                 = 'tomcat7'
   $version              = 'latest'
   $fedora_admin_pass    = 'fedoraAdmin'
@@ -12,6 +12,6 @@ class fcrepo::params {
   $fedora_context       = 'fedora'
   $messaging_uri        = ''
   $ri_enabled           = 'true'
-  $tomcat_home          = '/usr/share/tomcat'
-  $server_host          = fqdn
+  $tomcat_home          = '/usr/local/tomcat'
+  $server_host          = $::fqdn
 }
