@@ -20,12 +20,6 @@ class fcrepo::config(
 	include staging
   include concat::setup
 
-  #  if $dbtype == 'mysql' {
-  #    include fcrepo::mysql
-  #  } else {
-  #    include fcrepo::derby
-  #  }
-  # 
   if $messaging_uri == '' {
     $messaging_enabled = 'false'
   } else {
