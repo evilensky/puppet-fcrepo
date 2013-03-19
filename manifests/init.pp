@@ -1,5 +1,6 @@
 class fcrepo {
-  
+  include fcrepo::config
+
   if $config::version == 'latest' {
     $download_url = "http://sourceforge.net/projects/fedora-commons/files/latest/download"
   } else {
@@ -29,7 +30,7 @@ class fcrepo {
     user        => $config::user,
     group       => $config::group,
     path        => ['/bin', '/usr', '/usr/bin'],
-    require     => [Staging::File['fcrepo-installer.jar'],Concat["$fcrepo::config::propfile"]],
+    require     => [Staging::File['fcrepo-installer.jar'],Concat["$fcrepo::config::propfile"],File["$config::fedora_base"],Class['tomcat'],],
     notify      => File["${config::fedora_home}/server/status"], 
     #Concat::Fragment['fedora-tomcat-config']]
   }
