@@ -1,4 +1,4 @@
-class fcrepo::mysql inherits fcrepo::config{
+class fcrepo::mysql {
   $database     = 'mysql'
   $driver       = 'included'
   $driver_class = 'com.mysql.jdbc.Driver'
