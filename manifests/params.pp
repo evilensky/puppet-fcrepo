@@ -13,5 +13,5 @@ class fcrepo::params {
   $messaging_uri        = ''
   $ri_enabled           = 'true'
   $tomcat_home          = '/usr/local/tomcat'
-  $server_host          = $::fqdn
+  $server_host          = $hostname
 }
