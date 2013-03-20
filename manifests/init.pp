@@ -1,4 +1,11 @@
-class fcrepo {
+class fcrepo inherits fcrepo::config {
+
+  #we need a "valid fqdn" for fedora purposes, so lets enter a hosts file entry equivalent to our box
+
+  host { $hostname:
+    ip     => '127.0.0.1',
+    ensure => present,
+  }
   
   if $config::version == 'latest' {
     $download_url = "http://sourceforge.net/projects/fedora-commons/files/latest/download"
@@ -23,7 +30,7 @@ class fcrepo {
  
   exec { 'install-fedora':
     command     => "java -jar /opt/staging/fedora/fcrepo-installer.jar ${fcrepo::config::propfile}",
-    creates     => "$fcrepo::config::fedora_home/server",
+    creates     => "$fcrepo::config::tomcat_home/webapps/fedora.war",
     environment => "FEDORA_HOME=${config::fedora_home}",
     timeout     => 1800,
     user        => $config::user,
